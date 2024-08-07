@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { of, subscribeOn } from 'rxjs';
 import { HeroesComponent } from './heroes.component';
 import { Hero } from '../hero';
 
@@ -19,14 +19,6 @@ describe("HeroesComponent", () => {
     component = new HeroesComponent(mockHeroService);
   });
 
-  it("Delete method should remove a hero from the heroes list", () => {
-    component.heroes = HEROES;
-    mockHeroService.deleteHero.and.returnValue(of(true));
-
-    component.delete(component.heroes[1]);
-
-    expect(component.heroes[1].id).toEqual(3);
-  });
 
   it("Get method should storage an array of heroes", () => {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
@@ -43,5 +35,23 @@ describe("HeroesComponent", () => {
     component.add("Iron Man");
 
     expect(component.heroes[3].name).toBe("Iron Man");
+  });
+
+  it("Delete method should remove a hero from the heroes list", () => {
+    mockHeroService.deleteHero.and.returnValue(of(true));
+    component.heroes = HEROES;
+
+    component.delete(component.heroes[1]);
+
+    expect(component.heroes[1].id).toEqual(3);
+  });
+
+  it("Delete method should call delete from HeroService", () => {
+    mockHeroService.deleteHero.and.returnValue(of(true));
+    component.heroes = HEROES;
+
+    component.delete(HEROES[1]);
+
+    expect(mockHeroService.deleteHero).toHaveBeenCalledWith(HEROES[1]);
   });
 });
