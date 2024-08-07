@@ -28,7 +28,7 @@ describe("HeroesComponent", () => {
     expect(component.heroes.length).toBe(3);
   });
 
-  it("Add methiod should push a hero to the array of heroes", () => {
+  it("Add method should push a hero to the array of heroes", () => {
     mockHeroService.addHero.and.returnValue(of({ id: 4, name: "Iron Man", strength: 35 } as Hero));
     component.heroes = HEROES;
 
