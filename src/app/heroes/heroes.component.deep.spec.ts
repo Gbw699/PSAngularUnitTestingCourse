@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroesComponent } from './heroes.component';
-import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { of } from 'rxjs';
@@ -30,7 +30,7 @@ describe('HeroesComponent (deep test)', () => {
       declarations: [HeroesComponent, HeroComponent],
       providers: [{ provide: HeroService, useValue: mockHeroService }],
       schemas: [NO_ERRORS_SCHEMA],
-    })
+    });
     fixture = TestBed.createComponent(HeroesComponent);
     nativeElement = fixture.nativeElement;
   });
