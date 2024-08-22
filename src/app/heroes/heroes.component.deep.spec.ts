@@ -61,4 +61,19 @@ describe('HeroesComponent (deep test)', () => {
 
     expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
   });
+
+  it(`Should call heroSerive.delete when the Hero Component's onDeleteClick method is trigger.`, () => {
+    spyOn(fixture.componentInstance, 'delete');
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
+
+    let heroComponentsDE = fixture.debugElement.queryAll(
+      By.directive(HeroComponent)
+    );
+    (<HeroComponent>heroComponentsDE[0].componentInstance).delete.emit(
+      undefined
+    );
+
+    expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+  });
 });
