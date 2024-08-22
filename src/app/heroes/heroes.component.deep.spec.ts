@@ -38,12 +38,27 @@ describe('HeroesComponent (deep test)', () => {
   it('Should render each hero as a HeroComponent', () => {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
     fixture.detectChanges();
-    let HeroComponentsDE = fixture.debugElement.queryAll(
+    let heroComponentsDE = fixture.debugElement.queryAll(
       By.directive(HeroComponent)
     );
 
-    for (let i = 0; i < HeroComponentsDE.length; i++) {
-      expect(HeroComponentsDE[i].componentInstance.hero).toEqual(HEROES[i]);
+    for (let i = 0; i < heroComponentsDE.length; i++) {
+      expect(heroComponentsDE[i].componentInstance.hero).toEqual(HEROES[i]);
     }
+  });
+
+  it(`Should call heroSerive.delete when the Hero Component's delete button is clicked.`, () => {
+    spyOn(fixture.componentInstance, 'delete');
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
+
+    let heroComponentsDE = fixture.debugElement.queryAll(
+      By.directive(HeroComponent)
+    );
+    heroComponentsDE[0]
+      .query(By.css('.delete'))
+      .triggerEventHandler('click', { stopPropagation: () => {} });
+
+    expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
   });
 });
