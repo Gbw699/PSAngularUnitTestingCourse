@@ -70,9 +70,10 @@ describe('HeroesComponent (deep test)', () => {
     let heroComponentsDE = fixture.debugElement.queryAll(
       By.directive(HeroComponent)
     );
-    (<HeroComponent>heroComponentsDE[0].componentInstance).delete.emit(
-      undefined
-    );
+    // (<HeroComponent>heroComponentsDE[0].componentInstance).delete.emit(
+    //   undefined
+    // );
+    heroComponentsDE[0].triggerEventHandler('delete', null);
 
     expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
   });
