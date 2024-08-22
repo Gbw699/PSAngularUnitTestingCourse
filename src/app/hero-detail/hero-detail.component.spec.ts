@@ -51,4 +51,16 @@ describe('HeroDetailComponent', () => {
 
     expect(nativeElement.querySelector('h2')?.textContent).toContain('BATMAN');
   });
+
+  it('Should call updateHero whensave is called', (done) => {
+    mockHeroService.updateHero.and.returnValue(of(undefined));
+    fixture.detectChanges();
+
+    fixture.componentInstance.save();
+
+    setTimeout(() => {
+      expect(mockHeroService.updateHero).toHaveBeenCalled();
+      done();
+    }, 300);
+  });
 });
